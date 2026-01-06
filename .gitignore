@@ -11,6 +11,7 @@ node_modules
 .flowbite-react
 dist
 dist-ssr
+routeTree.gen.ts
 *.local
 
 # Editor directories and files
