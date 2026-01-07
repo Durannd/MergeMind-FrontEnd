@@ -9,44 +9,61 @@ import {
     NavbarCollapse,
     NavbarLink,
     NavbarToggle,
+    Button
 } from "flowbite-react";
+
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "@tanstack/react-router";
 
 import Logo from "../assets/mergemind-logo.png";
 
 export default function Header() {
+    const { user, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
     return (
         <Navbar fluid rounded>
             <NavbarBrand href="/">
                 <img src={Logo} className="mr-3 h-6 sm:h-12" alt="MergeMind Logo" />
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">MergeMind</span>
             </NavbarBrand>
-            <div className="flex md:order-2">
-                <Dropdown
-                    arrowIcon={false}
-                    inline
-                    label={
-                        <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
-                    }
-                >
-                    <DropdownHeader>
-                        <span className="block text-sm">Bonnie Green</span>
-                        <span className="block truncate text-sm font-medium">name@flowbite.com</span>
-                    </DropdownHeader>
-                    <DropdownItem>My Profile</DropdownItem>
-                    <DropdownItem>My Projects</DropdownItem>
-                    <DropdownDivider />
-                    <DropdownItem>Sign out</DropdownItem>
-                </Dropdown>
-                <NavbarToggle />
-            </div>
+            {user && (
+                <div className="flex md:order-2">
+                    <Dropdown
+                        arrowIcon={false}
+                        inline
+                        label={
+                            <Avatar
+                                alt="User settings"
+                                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                                rounded
+                            />
+                        }
+                    >
+                        <DropdownHeader>
+                            <span className="block text-sm">{user?.name}</span>
+                            <span className="block truncate text-sm font-medium">{user?.email}</span>
+                        </DropdownHeader>
+                        <DropdownItem>My Profile</DropdownItem>
+                        <DropdownItem>My Projects</DropdownItem>
+                        <DropdownDivider />
+                        <DropdownItem onClick={logout}>Sign out</DropdownItem>
+                    </Dropdown>
+                    <NavbarToggle />
+                </div>
+            )}
+            {!user && (
+                <div className="flex md:order-2 gap-4 mr-4">
+                    <Button onClick={() => navigate({ to: "/login" })}>Sign in</Button>
+                    <Button color="purple" onClick={() => navigate({ to: "/register" })}>Sign up</Button>
+                </div>
+            )}
             <NavbarCollapse>
-                <NavbarLink href="#" active>
+                <NavbarLink href="#">
                     Home
                 </NavbarLink>
-                <NavbarLink href="#">About</NavbarLink>
-                <NavbarLink href="#">Services</NavbarLink>
-                <NavbarLink href="#">Pricing</NavbarLink>
-                <NavbarLink href="#">Contact</NavbarLink>
+                <NavbarLink href="#">Explore</NavbarLink>
+                <NavbarLink href="#">Projects</NavbarLink>
             </NavbarCollapse>
         </Navbar>
     );
