@@ -54,8 +54,8 @@ export default function Header() {
             )}
             {!user && (
                 <div className="flex md:order-2 gap-4 mr-4">
-                    <Button onClick={() => navigate({ to: "/login" })}>Sign in</Button>
-                    <Button color="purple" onClick={() => navigate({ to: "/register" })}>Sign up</Button>
+                    <Button outline onClick={() => navigate({ to: "/login" })}>Sign in</Button>
+                    <Button color="dark" outline onClick={() => navigate({ to: "/signup" })}>Sign up</Button>
                 </div>
             )}
             <NavbarCollapse>

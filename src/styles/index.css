@@ -3,3 +3,11 @@
 @import "flowbite-react/plugin/tailwindcss";
 @source "../.flowbite-react/class-list.json";
 
+[data-testid="carousel"] > div {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+[data-testid="carousel"] > div::-webkit-scrollbar {
+    display: none; /* Chrome, Safari e Opera */
+}
