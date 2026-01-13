@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
         registerMutation.mutate({ name, email, password });
     }
 
-    const logout = () => {
+     const logout = () => {
         setUser(null);
         localStorage.clear();
     };

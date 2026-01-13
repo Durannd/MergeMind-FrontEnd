@@ -21,7 +21,7 @@ function SignUpPage() {
     const navigate = useNavigate()
 
     if (user) {
-        navigate({ to: '/app' })
+        navigate({ to: '/' })
     }
 
     const handleRegister = async (e) => {
@@ -35,7 +35,7 @@ function SignUpPage() {
 
     return (
         <div className="flex flex-row w-full h-screen">
-            <div className="w-full md:w-1/2 flex items-center justify-center bg-[#0d1117] text-white">
+            <div className="w-full md:w-1/2 flex items-center justify-center  text-white">
                 <form
                     onSubmit={handleRegister}
                     className="flex w-full max-w-md md:max-w-lg flex-col gap-4 p-8 bg-gray-900 rounded-lg shadow-xl border border-gray-800"

@@ -23,7 +23,7 @@ function LoginPage() {
 
 
   if (user) {
-    navigate({ to: '/app' });
+    navigate({ to: '/' });
   }
 
 
@@ -41,7 +41,7 @@ function LoginPage() {
   return (
     <div className="flex flex-row w-full h-screen">
 
-      <div className="w-full md:w-1/2 flex items-center justify-center bg-[#0d1117] text-white">
+      <div className="w-full md:w-1/2 flex items-center justify-center text-white">
         <form onSubmit={handleLogin} className="flex w-full max-w-md md:max-w-lg flex-col gap-4 p-8 bg-gray-900 rounded-lg shadow-xl border border-gray-800">
           <h2 className="text-2xl font-bold">Sign in on MergeMind!</h2>
           <div>
@@ -63,7 +63,7 @@ function LoginPage() {
             <TextInput
               id="password"
               type="password"
-              placeholder="Senha"
+              placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               required
             />

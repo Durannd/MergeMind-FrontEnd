@@ -4,9 +4,9 @@ import { Outlet } from '@tanstack/react-router';
 
 export default function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#0d1117]">
+    <div className="flex flex-col min-h-screen bg-[#11151c]">
       <Header />
-      <main className="flex-grow flex flex-col items-center justify-center p-6 text-white">
+      <main className="flex-grow flex flex-col p-6 text-white">
         <Outlet />
       </main>
       <FooterComponent />

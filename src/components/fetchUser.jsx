@@ -7,7 +7,7 @@ export default async function fetchUser(email, password) {
         body: JSON.stringify({ email, password }),
     });
     if (!response.ok) {
-        throw new Error('Failed to fetch user');
+        throw new Error('Email or password invalid');
     }
     const data = await response.json();
     return data;

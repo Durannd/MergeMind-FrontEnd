@@ -18,6 +18,7 @@ import { useNavigate } from "@tanstack/react-router";
 
 import Logo from "../assets/mergemind-logo.png";
 
+
 export default function Header() {
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -30,12 +31,13 @@ export default function Header() {
             {user && (
                 <div className="flex md:order-2">
                     <Dropdown
+                        
                         arrowIcon={false}
                         inline
                         label={
                             <Avatar
-                                alt="User settings"
-                                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                                alt="User avatar"
+                                img={user?.photo_url || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}
                                 rounded
                             />
                         }
@@ -46,6 +48,7 @@ export default function Header() {
                         </DropdownHeader>
                         <DropdownItem>My Profile</DropdownItem>
                         <DropdownItem>My Projects</DropdownItem>
+                        <DropdownItem>My Applications</DropdownItem>
                         <DropdownDivider />
                         <DropdownItem onClick={logout}>Sign out</DropdownItem>
                     </Dropdown>
@@ -59,11 +62,15 @@ export default function Header() {
                 </div>
             )}
             <NavbarCollapse>
-                <NavbarLink href="#">
+                <NavbarLink href="" onClick={() => navigate({ to: '/' })}>
                     Home
                 </NavbarLink>
-                <NavbarLink href="#">Explore</NavbarLink>
-                <NavbarLink href="#">Projects</NavbarLink>
+                {user && (
+                    <NavbarCollapse>
+                        <NavbarLink href="" onClick={() => navigate({ to: '/explore' })}>Explore</NavbarLink>
+                        <NavbarLink href="" onClick={() => navigate({ to: '/projects' })}>Projects</NavbarLink>
+                    </NavbarCollapse>
+                )}
             </NavbarCollapse>
         </Navbar>
     );
