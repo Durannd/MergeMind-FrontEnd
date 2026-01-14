@@ -27,14 +27,14 @@ function listProjects() {
 
   return (
     <>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 p-4 m-10">
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 ">
         {data.content.map((project) => (
           <Card
             key={project.id}
-            className="overflow-hidden hover:scale-105 transition-transform m-7"
+            className="overflow-hidden hover:scale-105  transition-transform m-7"
             onClick={() => navigate({ to: `/projects/${project.id}` })}
           >
-            <div className="h-32 w-full overflow-hidden">
+            <div className="xl:h-32 w-full overflow-hidden">
               <img
                 src={
                   project.banner_url ||

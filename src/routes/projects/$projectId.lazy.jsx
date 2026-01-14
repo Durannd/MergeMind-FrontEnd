@@ -90,7 +90,7 @@ function ProjectDetails() {
         queryKey: ['projectParticipants', projectId],
         queryFn: () => findParticipantsByProjectId(projectId),
     })
-    
+
 
     if (error) {
         return <div>Error loading project: {error.message}</div>
@@ -139,7 +139,16 @@ function ProjectDetails() {
                                         <h3 className="text-xl font-bold text-white mb-2">{role.name}</h3>
                                         <p className="text-gray-300 mb-3">{role.description}</p>
                                         <div className="flex items-center justify-between">
-                                            <Badge color="info">{role.stacks.map(stack => stack).join(', ')}</Badge>
+                                            <div className="flex flex-wrap gap-2">
+                                                {role.stacks.map((stack, index) => {
+                                                    const colors = ['indigo', 'purple', 'pink', 'blue', 'cyan', 'teal', 'green'];
+                                                    const color = colors[index % colors.length];
+                                                    return (
+                                                        <Badge key={stack} color={color} className="min-w-[80px] h-8 text-base text-center">{stack}</Badge>
+                                                    )
+                                                })}
+                                            </div>
+
                                             <Button size="sm" color="blue">Apply</Button>
                                         </div>
                                     </div>
@@ -183,7 +192,7 @@ function ProjectDetails() {
                         </div>
                     </Card>
 
-                    {/* Actions */}
+                    {/* Participants */}
                     <Card>
                         <h3 className="text-xl font-bold text-white mb-4">Participants</h3>
                         {isParticipantsLoading && <p>Loading participants...</p>}
