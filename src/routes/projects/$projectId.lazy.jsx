@@ -100,6 +100,8 @@ function ProjectDetails() {
         return <div className="text-center text-white text-xl p-10">Loading...</div>
     }
 
+    const isOwner = data.user.id === JSON.parse(localStorage.getItem('user'))?.id;
+
     return (
         <div className="min-h-screen">
             {/* Hero Banner */}
@@ -116,7 +118,13 @@ function ProjectDetails() {
                     <h2 className="">{data.short_description}</h2>
                 </div>
             </div>
-
+            {isOwner && (
+                <div className="flex justify-end mb-6">
+                    <Button color="blue" onClick={() => navigate({ to: `/projects/${projectId}/edit` })}>
+                        Edit Project
+                    </Button>
+                </div>
+            )}
             <div className="grid md:grid-cols-3 gap-8">
                 {/* Main Content */}
                 <div className="md:col-span-2 space-y-6">
@@ -148,8 +156,17 @@ function ProjectDetails() {
                                                     )
                                                 })}
                                             </div>
+                                            {!isOwner ? (
 
-                                            <Button size="sm" color="blue">Apply</Button>
+                                                <Button size="sm" color="blue">Apply</Button>
+                                            ) : (
+                                                <>
+                                                    <div className="flex gap-2" >
+                                                        <Button size="sm" color="green" >Edit</Button>
+                                                    </div>
+                                                </>
+
+                                            )}
                                         </div>
                                     </div>
                                 ))}
