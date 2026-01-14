@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import fetchUser from "../components/fetchUser";
 import signUpUser from "../components/signUpUser";
-
+import { useNavigate } from "@tanstack/react-router";
 
 export const AuthContext = createContext();
 
@@ -70,6 +70,7 @@ export const AuthProvider = ({ children }) => {
      const logout = () => {
         setUser(null);
         localStorage.clear();
+        navigate({ to: '/login' });
     };
     const isAuthenticated = () => {
         return authenticated;

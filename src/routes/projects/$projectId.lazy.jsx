@@ -2,7 +2,9 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { Card, Badge, Button, Avatar } from 'flowbite-react'
-import { HiClock, HiUsers, HiTag, HiCalendar, HiStar } from 'react-icons/hi'
+import Status from '../../components/enumStatus';
+import SideBarEditRole from '../../components/sideBarEditRole.jsx';
+import { useState } from 'react';
 
 export const Route = createLazyFileRoute('/projects/$projectId')({
     component: ProjectDetails,
@@ -11,6 +13,10 @@ export const Route = createLazyFileRoute('/projects/$projectId')({
 function ProjectDetails() {
     const { projectId } = Route.useParams()
     const navigate = useNavigate()
+
+    
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [selectedRole, setSelectedRole] = useState(null);
 
     const fetchProjectById = async (projectId) => {
 
@@ -91,6 +97,17 @@ function ProjectDetails() {
         queryFn: () => findParticipantsByProjectId(projectId),
     })
 
+    // Funções de controle do Drawer
+    const handleEditRole = (role) => {
+        setSelectedRole(role);
+        setIsDrawerOpen(true);
+    };
+
+    const handleCloseDrawer = () => {
+        setIsDrawerOpen(false);
+        setSelectedRole(null);
+    };
+
 
     if (error) {
         return <div>Error loading project: {error.message}</div>
@@ -101,6 +118,11 @@ function ProjectDetails() {
     }
 
     const isOwner = data.user.id === JSON.parse(localStorage.getItem('user'))?.id;
+    if (!JSON.parse(localStorage.getItem('user'))?.id) {
+        navigate({ to: '/login' });
+    }
+
+
 
     return (
         <div className="min-h-screen">
@@ -113,7 +135,7 @@ function ProjectDetails() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#11151c] via-[#11151c]/70 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8">
-                    <Badge color="success" className="mb-3 w-fit">{data.status}</Badge>
+                    <Badge color="success" className="mb-3 w-fit">{Status[data.status]}</Badge>
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">{data.title}</h1>
                     <h2 className="">{data.short_description}</h2>
                 </div>
@@ -162,7 +184,7 @@ function ProjectDetails() {
                                             ) : (
                                                 <>
                                                     <div className="flex gap-2" >
-                                                        <Button size="sm" color="green" >Edit</Button>
+                                                        <Button size="sm" color="green" onClick={() => handleEditRole(role)}>Edit</Button>
                                                     </div>
                                                 </>
 
@@ -235,6 +257,13 @@ function ProjectDetails() {
                     </Card>
                 </div>
             </div>
+
+            {/* Sidebar para editar role */}
+            <SideBarEditRole 
+                isOpen={isDrawerOpen} 
+                onClose={handleCloseDrawer} 
+                roleData={selectedRole}
+            />
         </div>
     )
 }

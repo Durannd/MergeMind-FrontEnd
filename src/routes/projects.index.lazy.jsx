@@ -16,6 +16,10 @@ function listProjects() {
   const page = currentPage - 1
   const onPageChange = (page) => setCurrentPage(page)
 
+  if(!JSON.parse(localStorage.getItem('user'))?.id){
+        navigate({ to: '/login' });
+    }
+
   const { data, error, isLoading } = useQuery({
     queryKey: ['projects', currentPage],
     queryFn: () => fetchProjects(currentPage - 1),
